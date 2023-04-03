@@ -1,0 +1,69 @@
+Map
+    Cell[,] cells;
+
+    BuildMap(int line, int column);
+        //instancia o mapa inteiro setando blocktype pra block 
+        //define as walls
+        //preenche celulas proximas para cada celula
+
+    BuildPath();
+        //definir porta e seta celula pra entrance
+        //definir saida e seta celula pra exit
+        //criar celula debaixo da porta e começar o random a partir dela
+        
+        //while (portafinal não encontrada)
+            //tira o random (0,1,2)
+                //caso seja 0
+                    //se a celula for wall, continue                
+                    //move esquerda e seta blocketype como floor
+                //caso seja 1
+                    //se linha for lenght - 2
+                        //verifica se é a porta
+                            //porta encontrada
+                    //move baixo
+                //caso seja 2
+                //se a celula for wall, continue                
+                    //move direita e seta blocketype como floor             
+            //cria o caminho da celula de acordo com o random
+        //
+
+class Cell
+    BlockType block;
+    bool isVisible;
+
+    Cell left;
+    Cell right;
+    Cell down;
+
+enum BlockType{
+    Block,
+    Floor,
+    Wall,
+    Entrance,
+    Exit
+}
+
+Player
+    Cell cell;
+
+    Move();
+        //recebe input
+        //valida input
+        
+        //left
+            //if cell.left.block 
+                //não anda
+            //else
+                //cell nova fica visible
+                //anda
+        //faz com os outros
+
+Main
+    //builda o map
+    //instancia o player
+
+    //while()
+        //printa o mapa e o player na tela
+        //player.Move();
+        //if(player.cell.blocktype == exit)
+            //gg

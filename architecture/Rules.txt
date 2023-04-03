@@ -1,0 +1,22 @@
+Mapa é gerado aleatóriamente
+Jogador começa em um canto do mapa e tem que chegar do outro lado
+Jogador se move pelas setas
+Mapa é revelado quando o jogador andar nele
+
+-Core
+Gerador do Mapa
+Movimentação do Player
+
+-Features
+Visibilidade das celulas
+Mensagem falando que a parede é muito dura
+
+Regras
+Topeira não pode sair do mapa
+Celulas só ficam visíveis quando a topeira andou nelas
+Topeira não pode andar em células que não são o caminho
+Topeira começa na primeira célula aberta e termina na última
+Na geração do mapa, o caminho nunca sobe (apenas lado e baixo)
+
+Polish
+Dificuldade (abre mapa mais pros lados do que pra baixo)
