@@ -15,8 +15,14 @@ internal class Program
             {
                 if (map.cells[i, j] == player.Cell)
                 {
-                    Console.Write("|@|");
+                    Console.Write("|!|");
 
+                    continue;
+                }
+
+                if (map.cells[i, j].isVisible)
+                {
+                    Console.Write("| |");
                     continue;
                 }
 
@@ -27,14 +33,22 @@ internal class Program
                     continue;
                 }
 
+                if (map.cells[i, j].blockType == Cell.ObjectType.Floor)
+                {
+                    Console.Write("|#|");
+                }
                 if (map.cells[i, j].blockType == Cell.ObjectType.Wall 
                  || map.cells[i, j].blockType == Cell.ObjectType.Block
-                 || map.cells[i, j].blockType == Cell.ObjectType.Exit
-                 || map.cells[i, j].blockType == Cell.ObjectType.Floor)
+                  )
                 {
-                    Console.Write("|O|");
+                    Console.Write("|#|");
 
                     continue;
+                }
+
+                if(map.cells[i, j].blockType == Cell.ObjectType.Exit)
+                {
+                    Console.Write("|#|");
                 }
             }
             Console.WriteLine();
@@ -76,20 +90,27 @@ internal class Program
                        where Cell.blockType == Cell.ObjectType.Entrance
                        select Cell).FirstOrDefault();
 
+        Cell backup = null;
+
         while (true)
         {
-            Console.Clear();
+            if (backup != player.Cell)
+            {
+                Console.Clear();
 
-            Console.WriteLine();
+                Console.WriteLine();
 
-            ShowMap();
+                ShowMap();
+
+                backup = player.Cell;
+            }
 
             ConsoleKey movement;
 
             Console.WriteLine("Digite a direção desejada");
             movement = Console.ReadKey(true).Key;
 
-           player.Move(movement);
+           player.Move(movement);   
 
             if (player.Cell.blockType == Cell.ObjectType.Exit)
             {

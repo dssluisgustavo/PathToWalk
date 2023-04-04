@@ -30,9 +30,9 @@ namespace PathToWalk
                     Cell.isVisible = true;
                 }
             }
-            
-            
-            if(key == ConsoleKey.RightArrow)
+
+
+            if (key == ConsoleKey.RightArrow)
             {
                 if (Cell.right.blockType == Cell.ObjectType.Block || Cell.right.blockType == Cell.ObjectType.Wall)
                 {
@@ -41,33 +41,30 @@ namespace PathToWalk
                 else
                 {
                     Cell = Cell.right;
-                    Cell.right.isVisible = true;
+                    Cell.isVisible = true;
                 }
 
             }
 
-            if(key == ConsoleKey.DownArrow)
+            if (key == ConsoleKey.DownArrow)
             {
                 if (Cell.down.blockType == Cell.ObjectType.Block || Cell.down.blockType == Cell.ObjectType.Wall)
                 {
                     Console.WriteLine("Não é possivel se mover para baixo");
                 }
-
-                if (Cell.down.blockType == Cell.ObjectType.Floor || Cell.down.blockType == Cell.ObjectType.Exit)
+                else
                 {
                     Cell = Cell.down;
-                    Cell.down.isVisible = true;
+                    Cell.isVisible = true;
+                }
 
-                    if (Cell.down.blockType == Cell.ObjectType.Exit)
-                    {
-                        Cell = Cell.down;
-                        Cell.down.isVisible = true;
-                        Console.WriteLine("Parabéns!! Você encontrou a Saida");
-                    }
+                if (Cell.blockType == Cell.ObjectType.Exit)
+                {
+                    Console.WriteLine("Parabéns!! Você encontrou a Saida");
                 }
             }
-            
-            if(key == ConsoleKey.UpArrow)
+
+            if (key == ConsoleKey.UpArrow)
             {
                 if (Cell.up.blockType == Cell.ObjectType.Entrance
                 || Cell.up.blockType == Cell.ObjectType.Block
@@ -78,9 +75,9 @@ namespace PathToWalk
                 else
                 {
                     Cell = Cell.up;
-                    Cell.up.isVisible = true;
+                    Cell.isVisible = true;
                 }
-            } 
+            }
         }
     }
 }

@@ -58,16 +58,15 @@ namespace PathToWalk
                         cell.left = cells[i, j - 1];
                     }
 
-                    if (i < cells.GetLength(0) - 1)
-                    {
-                        cell.down = cells[i + 1, j];
-                    }
-
                     if(j < cells.GetLength(0) - 1)
                     {
                         cell.right = cells[i, j + 1];
                     }
 
+                    if( i <  cells.GetLength(0))
+                    {
+                        cell.down = cells[i + 1, j];
+                    }
                 }
             }
         }
@@ -76,21 +75,20 @@ namespace PathToWalk
         {
             Random randNum = new Random();
 
-            //int randomLine = randNum.Next(0, cells.GetLength(0) - 1);
-            int randomColumn = randNum.Next(1, cells.GetLength(1) - 1);
+            int randomEntrance = randNum.Next(1, cells.GetLength(1) - 1);
+            int randomExit = randNum.Next(1, cells.GetLength(1) -1);
 
-            cells[0, randomColumn].blockType = Cell.ObjectType.Entrance;
-            cells[cells.GetLength(0) - 1, randomColumn].blockType = Cell.ObjectType.Exit;
+            cells[0, randomEntrance].blockType = Cell.ObjectType.Entrance;
+            cells[cells.GetLength(0) - 1, randomExit].blockType = Cell.ObjectType.Exit;
 
-            Cell start = cells[1, randomColumn];
+            Cell start = cells[1, randomEntrance];
             start.blockType = Cell.ObjectType.Floor;
 
-            Cell finish = cells[cells.GetLength(0) - 2, randomColumn];
+            Cell finish = cells[cells.GetLength(0) - 2, randomExit];
             finish.blockType = Cell.ObjectType.Floor;
 
             //pega celula down e seta como floor para o player se movimentar e apartir dela, tira um random
 
-            //While tem q ter a célula em baixo do Entrance como condição aaaaaaaaa
             while (start != finish)
             {
                 int door = randNum.Next(1, 5);
@@ -105,7 +103,7 @@ namespace PathToWalk
                     case 1:
                         //seta celula de baixo como floor e segura ela
 
-                        if (start.down.blockType == Cell.ObjectType.Wall /*|| start.down.blockType == Cell.ObjectType.Block*/)
+                        if (start.down.blockType == Cell.ObjectType.Wall)
                         {
                             continue;
                         }
@@ -117,7 +115,6 @@ namespace PathToWalk
 
                     case 2:
                         if (start.up.blockType == Cell.ObjectType.Entrance
-                            /*|| start.up.blockType == Cell.ObjectType.Block*/
                             || start.up.blockType == Cell.ObjectType.Wall)
                         {
                             continue;
@@ -129,9 +126,9 @@ namespace PathToWalk
                         break;
 
                     case 3:
-                        //seta celula da direita como floor e segura el
+                        //seta celula da direita como floor e segura ela
 
-                        if (start.right.blockType == Cell.ObjectType.Wall /*|| start.right.blockType == Cell.ObjectType.Block*/)
+                        if (start.right.blockType == Cell.ObjectType.Wall)
                         {
                             continue;
                         }
@@ -142,9 +139,9 @@ namespace PathToWalk
                         break;
 
                     case 4:
-                        //seta celula da esquerda como floor e segura el
+                        //seta celula da esquerda como floor e segura ela
 
-                        if (start.left.blockType == Cell.ObjectType.Wall /*|| start.left.blockType == Cell.ObjectType.Block*/)
+                        if (start.left.blockType == Cell.ObjectType.Wall)
                         {
                             continue;
                         }
