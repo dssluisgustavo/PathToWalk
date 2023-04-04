@@ -4,28 +4,37 @@ using PathToWalk;
 using System.Linq;
 internal class Program
 {
-    public static void ShowMap(Map map)
+    static Player player;
+    static Map map;
+    public static void ShowMap()
     {
-
+        
         for (int i = 0; i < map.cells.GetLength(0); i++)
         {
             for (int j = 0; j < map.cells.GetLength(1); j++)
             {
-                if (map.cells[i, j].blockType == Cell.ObjectType.Entrance
+                if (map.cells[i, j] == player.Cell)
+                {
+                    Console.Write("|@|");
+
+                    continue;
+                }
+
+                if (map.cells[i, j].blockType == Cell.ObjectType.Entrance)
+                {
+                    Console.Write("| |");
+
+                    continue;
+                }
+
+                if (map.cells[i, j].blockType == Cell.ObjectType.Wall 
+                 || map.cells[i, j].blockType == Cell.ObjectType.Block
                  || map.cells[i, j].blockType == Cell.ObjectType.Exit
                  || map.cells[i, j].blockType == Cell.ObjectType.Floor)
                 {
-                    Console.Write("| |");
-                }
-
-                if (map.cells[i, j].blockType == Cell.ObjectType.Wall)
-                {
                     Console.Write("|O|");
-                }
 
-                if (map.cells[i, j].blockType == Cell.ObjectType.Block)
-                {
-                    Console.Write("|#|");
+                    continue;
                 }
             }
             Console.WriteLine();
@@ -37,7 +46,7 @@ internal class Program
         int line;
         int column;
 
-        Map map = new Map();
+        map = new Map();
 
         do
         {
@@ -46,7 +55,7 @@ internal class Program
             Console.WriteLine("Digite um número maior que 0 para a Linha");
         }
         while (int.TryParse(Console.ReadLine(), out line) == false || line <= 0);
-        
+
         do
         {
             Console.Clear();
@@ -61,17 +70,37 @@ internal class Program
 
         //intancia o player
 
-        Player player = new Player();
+        player = new Player();
 
-        player.Cell = (from Cell cell in map.cells
-                       where cell.blockType == Cell.ObjectType.Entrance
-                       select cell).FirstOrDefault();
+        player.Cell = (from Cell Cell in map.cells
+                       where Cell.blockType == Cell.ObjectType.Entrance
+                       select Cell).FirstOrDefault();
 
+        while (true)
+        {
+            Console.Clear();
 
-        Console.Clear();
+            Console.WriteLine();
 
-        Console.WriteLine();
+            ShowMap();
 
-        ShowMap(map);
+            ConsoleKey movement;
+
+            Console.WriteLine("Digite a direção desejada");
+            movement = Console.ReadKey(true).Key;
+
+           player.Move(movement);
+
+            if (player.Cell.blockType == Cell.ObjectType.Exit)
+            {
+                break;
+            }
+
+            if (movement == ConsoleKey.Escape)
+            {
+                Console.WriteLine("Comando inválido");
+            }
+        }
+
     }
 }

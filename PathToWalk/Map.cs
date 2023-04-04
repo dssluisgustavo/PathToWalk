@@ -42,15 +42,32 @@ namespace PathToWalk
                 cells[0, j].blockType = wall;
             }
 
-            for (int i = 1; i < cells.GetLength(0) - 1; i++)
+            for (int i = 0; i < cells.GetLength(0) - 1; i++)
             {
-                for (int j = 1; j < cells.GetLength(0) - 1; j++)
+                for (int j = 0; j < cells.GetLength(0) - 1; j++)
                 {
                     var cell = cells[i, j];
 
-                    cell.down = cells[i + 1, j];
-                    cell.left = cells[i, j - 1];
-                    cell.right = cells[i, j + 1];
+                    if( i > 0)
+                    {
+                        cell.up = cells[i - 1, j];
+                    }
+
+                    if ( j > 0)
+                    {
+                        cell.left = cells[i, j - 1];
+                    }
+
+                    if (i < cells.GetLength(0) - 1)
+                    {
+                        cell.down = cells[i + 1, j];
+                    }
+
+                    if(j < cells.GetLength(0) - 1)
+                    {
+                        cell.right = cells[i, j + 1];
+                    }
+
                 }
             }
         }
@@ -73,48 +90,22 @@ namespace PathToWalk
 
             //pega celula down e seta como floor para o player se movimentar e apartir dela, tira um random
 
-            /*var randomWay = randNum.Next(1, 3);
-
-            switch (randomWay)
-            {
-                case 1:
-                    cell.left = cells[1, randomColumn - 1];
-                    cell.left.isVisible = true;
-                    cell.left.blockType = floor;
-
-                    break;
-
-                case 2:
-                    cell.right = cells[1, randomColumn - 2];
-                    cell.right.isVisible = true;
-                    cell.right.blockType = floor;
-
-                    break;
-
-                case 3:
-                    cell.down = cells[2, randomColumn];
-                    cell.down.isVisible = true;
-                    cell.down.blockType = floor;
-
-                    break;
-
-            }*/
-
             //While tem q ter a célula em baixo do Entrance como condição aaaaaaaaa
             while (start != finish)
             {
-                int door = randNum.Next(1, 4);
+                int door = randNum.Next(1, 5);
 
                 // 1 - para baixo
-                // 2 - para left 
+                // 2 - para cima 
                 // 3 - para right
+                // 4 - para left
 
                 switch (door)
                 {
                     case 1:
                         //seta celula de baixo como floor e segura ela
 
-                        if (start.down.blockType == Cell.ObjectType.Wall)
+                        if (start.down.blockType == Cell.ObjectType.Wall /*|| start.down.blockType == Cell.ObjectType.Block*/)
                         {
                             continue;
                         }
@@ -125,14 +116,14 @@ namespace PathToWalk
                         break;
 
                     case 2:
-                        //seta celula da esquerda como floor e segura el
-
-                        if (start.left.blockType == Cell.ObjectType.Wall)
+                        if (start.up.blockType == Cell.ObjectType.Entrance
+                            /*|| start.up.blockType == Cell.ObjectType.Block*/
+                            || start.up.blockType == Cell.ObjectType.Wall)
                         {
                             continue;
                         }
 
-                        start = start.left;
+                        start = start.up;
                         start.blockType = Cell.ObjectType.Floor;
 
                         break;
@@ -140,12 +131,25 @@ namespace PathToWalk
                     case 3:
                         //seta celula da direita como floor e segura el
 
-                        if (start.right.blockType == Cell.ObjectType.Wall)
+                        if (start.right.blockType == Cell.ObjectType.Wall /*|| start.right.blockType == Cell.ObjectType.Block*/)
                         {
                             continue;
                         }
 
                         start = start.right;
+                        start.blockType = Cell.ObjectType.Floor;
+
+                        break;
+
+                    case 4:
+                        //seta celula da esquerda como floor e segura el
+
+                        if (start.left.blockType == Cell.ObjectType.Wall /*|| start.left.blockType == Cell.ObjectType.Block*/)
+                        {
+                            continue;
+                        }
+
+                        start = start.left;
                         start.blockType = Cell.ObjectType.Floor;
 
                         break;

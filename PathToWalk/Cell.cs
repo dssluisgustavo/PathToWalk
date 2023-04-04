@@ -14,6 +14,7 @@ namespace PathToWalk
         public Cell left;
         public Cell right;
         public Cell down;
+        public Cell up;
 
         public enum ObjectType
         {
